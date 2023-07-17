@@ -36,20 +36,29 @@ func (f *FolderWatcher) watch() {
 	// check against cloud hashes
 	// upload file and/or metadata
 	// delete files and/or metadata
-	diff := f.computeStateDiff()
-	if diff != nil {
-
-	}
+	f.computeStateDiff()
 }
 
-func (f *FolderWatcher) computeStateDiff() *State {
+func (f *FolderWatcher) computeStateDiff() {
 	state := f.getCurrentState()
 	if f.lastKnownState == nil {
 		f.lastKnownState = state
 	}
-
 }
 
 func (f *FolderWatcher) getCurrentState() *State {
-	return &State{}
+	files := f.getFiles()
+	folders := f.getFolders()
+	return &State{
+		files:   files,
+		folders: folders,
+	}
+}
+
+func (f *FolderWatcher) getFiles() []*File {
+	return []*File{}
+}
+
+func (f *FolderWatcher) getFolders() []*Folder {
+	return []*Folder{}
 }
